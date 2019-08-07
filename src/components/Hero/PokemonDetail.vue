@@ -57,6 +57,60 @@
                     </p>
                 </div>
             </article>
+            <article class="pokemon__info-box">
+                <div class="info-box__title">
+                <h2>Stats</h2>
+                </div>
+                <div class="info-box__content">
+                    <p
+                    v-for="estado in detail.stats"
+                    :key="estado.stat">
+                    {{ estado.stat.name }} : {{ estado.base_stat }}
+                    </p>
+                </div>
+            </article>
+            <article class="pokemon__info-box">
+                <div class="info-box__title">
+                <h2>Moves</h2>
+                </div>
+                <div class="info-box__content">
+                    <p
+                    v-for="mov in detail.moves"
+                    :key="mov.move">
+                    {{ mov.move.name }}
+                    </p>
+                </div>
+            </article>
+            <article class="pokemon__info-box">
+                <div class="info-box__title">
+                <h2>Item</h2>
+                </div>
+                <div class="info-box__content">
+                    <p
+                    v-for="it in detail.held_items"
+                    :key="it.held_items">
+                    {{ it.held_items }}
+                    </p>
+                </div>
+            </article>
+            <article class="pokemon__info-box">
+                <div class="info-box__title">
+                <h2>Order</h2>
+                </div>
+                <div class="info-box__content">
+                  <p>
+                  {{ detail.order }}
+                  </p>
+                </div>
+                <div class="info-box__title">
+                <h2>Default</h2>
+                </div>
+                <div class="info-box__content">
+                  <p>
+                  {{ detail.is_default }}
+                  </p>
+                </div>
+            </article>
         </section>
     </section>
 </template>
@@ -91,3 +145,29 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.pokemon {
+  &__all {
+    width: 960px;
+    padding-top: 60px;
+    margin: auto;
+  }
+  &__info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  &__info-box {
+    border: 1px #bababa;
+    margin: 6px;
+    text-align: center;;
+  }
+}
+.info-box {
+  &__tite {
+    margin-bottom: 12px;
+    border-bottom: 1px #e1e1e1;
+    padding-bottom: 8 px;
+  }
+}
+</style>
