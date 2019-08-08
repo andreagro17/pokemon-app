@@ -75,9 +75,9 @@
                 </div>
                 <div class="info-box__content">
                     <p
-                    v-for="mov in detail.moves"
-                    :key="mov.move">
-                    {{ mov.move.name }}
+                    v-for="move in detail.moves"
+                    :key="move.move">
+                    {{ move.move.name }}
                     </p>
                 </div>
             </article>
@@ -87,9 +87,9 @@
                 </div>
                 <div class="info-box__content">
                     <p
-                    v-for="it in detail.held_items"
-                    :key="it.held_items">
-                    {{ it.held_items }}
+                    v-for="item in detail.held_items"
+                    :key="item.held_items">
+                    {{ item.held_items }}
                     </p>
                 </div>
             </article>

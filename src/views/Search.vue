@@ -2,14 +2,19 @@
     <div>
       <div>
         <div class="prueba">
-          <input
-          type="text"
-          class="prueba__form-control"
-          v-model="textSearch"
-          placeholder='Search...'>
-         <button v-on:click="fetchPoke">Buscar</button>
-         <button v-on:click="pokemonFilter">Buscar_filtro</button>
-          <div v-for="pok2 of pokemonFilter" :key="pok2.name">
+        <input
+        type="text"
+        class="prueba__form-control"
+        v-model="textSearch"
+        placeholder="Search...">
+        <p> Text searched is: {{textSearch}}
+         <button
+         v-on:click="fetchPoke">
+         Buscar</button>
+         <button
+         v-on:click="pokemonFilter">
+         Buscar_filtro</button>
+        <div v-for="pok2 of pokemonFilter" :key="pok2.name">
           <span>{{ pok2.name }}</span>
           </div>
 
@@ -35,7 +40,7 @@ export default {
   data () {
     return {
       pokemons: [],
-      textSearch: '',
+      textSearch: 'Buscando...',
       searchPokemon: {}
     }
   },
@@ -44,7 +49,7 @@ export default {
     fetchPoke () {
     // https://router.vuejs.org/guide/advanced/data-fetching.html#fetching-after-navigation
     // $route.params.id
-      axios.get('https://pokeapi.co/api/v2/pokemon/')
+      axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
         .then(resul => {
           console.log('hay alguien?')
           console.log(resul)
@@ -53,10 +58,15 @@ export default {
         })
         .catch(error =>
           console.log(error))
-    } },
-  computed: {
+    },
+    onePokemon () {
 
+    }
+  },
+
+  computed: {
     pokemonFilter () {
+      // buscado en internet: por qué ocurre esto: con el this.textSearch no funciona
       var textSearch = this.textSearch
       return this.pokemons.filter(function (el) {
         return el.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
