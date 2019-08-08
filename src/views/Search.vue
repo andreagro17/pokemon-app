@@ -14,22 +14,22 @@
           </div>
 
         </div>
-      <!-- <pokemon-detail :pokemon=`${name}`> -->
-        <pokemon-detail/>
+      <a :pokemon="pokemonFilter"/>
+        <!-- <pokemon-detail/> esto funciona de moodo que si le doy a intro se cargan los pokemo y despues puedo hacer una busqueda por letras pero no e lo que busco -->
       </div>
     </div>
 
 </template>
 <script>
 import axios from 'axios'
-import PokemonDetail from '@/components/Hero/PokemonDetail'
+// import PokemonDetail from '@/components/Hero/PokemonDetail'
 // con axios puedo hacer una "request"
 // y pedir aquello del data ¿axios.put?
 export default {
   name: 'Search',
 
   components: {
-    PokemonDetail
+    // PokemonDetail
   },
 
   data () {
