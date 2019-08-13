@@ -1,27 +1,10 @@
 <template>
-<footer class="pokemon-footer">
-    <nav class="pokemon-footer__nav">
-        <!-- <ul class="nav__ul">
-            <li class="nav__li">
-                <a href="#/" class="router-link-active">Rojo</a>
-            </li>
-            <li class="nav__li">
-                <a href="#/" class="router-link-active">Amarillo</a>
-            </li>
-            <li class="nav__li">
-                <a href="#/" class="router-link-active">Azul</a>
-            </li>
-            <li class="nav__li">
-                <a href="#/" class="router-link-active">Plata</a>
-            </li>
-        </ul> -->
-    </nav>
-    <div class="pokemon-footer__logo">
-        <a> &copy; 1995-1999 GAME FREAK inc
-        <!-- <img src="pokemon-app/s-l300.jpg" alt="PokeBall" class="pokemon-header__logo"> -->
-        </a>
-    </div>
-</footer>
+  <footer class="pokemon-footer">
+    <nav class="pokemon-footer__nav"/>
+      <div class="pokemon-footer__logo">
+        <a> &copy; 1995-1999 GAME FREAK inc</a>
+      </div>
+  </footer>
 </template>
 
 <script>

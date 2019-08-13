@@ -1,23 +1,20 @@
 <template>
   <section class="pokemon-list">
     <ul class="pokemon-list__ul">
-    <!-- Preguntar a qué hace referencia lo siguiente y por qué se pone dentro del componente creado -->
-    <pokemon-cards
-          v-for="pepe in pokemonsList"
+      <pokemon-cards
+        v-for="pepe in pokemonsList"
           :key = "pepe.name"
           :name = "pepe.name"
           :url = "pepe.url"/>
-    </ul>
-    <div class=""></div>
+        </ul>
+      <div class=""></div>
     <h5> Prueba prev </h5>
-       <!-- :disabled="isPreviousButtonDisabled"   -->
-    <button @click="fullPokemons('prev')" class="prueba_prev"> Prev </button>
-    <button v-on:click="fullPokemons(nextPage)">Buscar</button>
-    <button @click="fullPokemons('next')" class="prueba_prev">Next</button>
-    <br>
-    {{ currentPage}}
-
-    <br>
+      <button @click="fullPokemons('prev')" class="prueba_prev"> Prev </button>
+        <button v-on:click="fullPokemons(nextPage)">Buscar</button>
+          <button @click="fullPokemons('next')" class="prueba_prev">Next</button>
+          <br>
+        {{ currentPage}}
+      <br>
     {{ pageNumber }}
   </section>
 </template>

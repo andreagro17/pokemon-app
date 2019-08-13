@@ -1,77 +1,88 @@
 <template>
+  <section>
     <div>
-      <div>
-        <div class="prueba">
-        <input
-        type="text"
-        class="prueba__form-control"
-        v-model="textSearch"
-        placeholder="Search...">
-        <p> Text searched is: {{textSearch}}
-         <button
-         v-on:click="fetchPoke">
-         Buscar</button>
-         <button
-         v-on:click="pokemonFilter">
-         Buscar_filtro</button>
-        <div v-for="pok2 of pokemonFilter" :key="pok2.name">
-          <span>{{ pok2.name }}</span>
-          </div>
-
+      <div class="prueba">
+        <input type="textSearch" class="prueba__form-control" v-model="textSearch" placeholder="Searching...">
+          <p> Text searched is: {{textSearch}} </p>
+           <button v-on:click="getOnePoke"> Detalles </button>
+            <div class="prueba__pokemon-filtered">
+             <li v-for="pok2 of pokemonFilter" :key="pok2.name">
+            <span v-on:click="getFullPoke"> {{ pok2.name }} </span>
+          </li>
         </div>
-      <a :pokemon="pokemonFilter"/>
-        <!-- <pokemon-detail/> esto funciona de moodo que si le doy a intro se cargan los pokemo y despues puedo hacer una busqueda por letras pero no e lo que busco -->
       </div>
+      <!-- <router-link class="pokemonhgj" tag= "div" :to="`/pokemon/${this.textSearch}`"> -->
+            <!-- v-for="pok2 in textSearch"
+            :key="pok2.name"/> -->
+    <pokemon-detail
+      :pokemons="pokemons"
+    />
+  <!-- </router-link> -->
     </div>
-
+  </section>
 </template>
+
 <script>
 import axios from 'axios'
-// import PokemonDetail from '@/components/Hero/PokemonDetail'
-// con axios puedo hacer una "request"
-// y pedir aquello del data ¿axios.put?
+import PokemonDetail from '@/components/Hero/PokemonDetail'
+
 export default {
   name: 'Search',
 
   components: {
-    // PokemonDetail
+    PokemonDetail
   },
-
   data () {
     return {
       pokemons: [],
-      textSearch: 'Buscando...',
-      searchPokemon: {}
+      textSearch: ''
     }
   },
-
+  mounted () {
+    this.getFullPoke()
+  },
   methods: {
-    fetchPoke () {
-    // https://router.vuejs.org/guide/advanced/data-fetching.html#fetching-after-navigation
-    // $route.params.id
-      axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
-        .then(resul => {
-          console.log('hay alguien?')
-          console.log(resul)
-          this.pokemons = resul.data.results
-          console.log('hola')
-        })
-        .catch(error =>
-          console.log(error))
+    async getFullPoke () {
+      try {
+        let resul = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
+        this.pokemons = resul.data.results
+      } catch (e) {
+        throw new Error('Prueba con otro Pokemo getFull')
+      }
     },
-    onePokemon () {
-
+    async getOnePoke (textSearch) {
+      try {
+        let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.textSearch}`)
+        console.log(res)
+        this.textSearch = res.data
+      } catch (e) {
+        throw new Error('Search again')
+      }
+    },
+    showDetail: function (a) {
+      console.log(this.textSearch)
     }
   },
-
   computed: {
     pokemonFilter () {
       // buscado en internet: por qué ocurre esto: con el this.textSearch no funciona
       var textSearch = this.textSearch
-      return this.pokemons.filter(function (el) {
-        return el.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
+      return this.pokemons.filter(function (item) {
+        return item.name.indexOf(textSearch) !== -1
       })
-    } }
+    }
+  }
 }
 
 </script>
+
+<style lang="scss" scoped>
+.prueba {
+  &__pokemon-filtered {
+    max-height: 150px;
+    overflow-y: scroll;
+    list-style: none;
+    text-transform: capitalize;
+  }
+}
+</style>
