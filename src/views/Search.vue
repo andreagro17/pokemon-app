@@ -1,88 +1,93 @@
 <template>
-  <section>
-    <div>
-      <div class="prueba">
-        <input type="textSearch" class="prueba__form-control" v-model="textSearch" placeholder="Searching...">
-          <p> Text searched is: {{textSearch}} </p>
-           <button v-on:click="getOnePoke"> Detalles </button>
-            <div class="prueba__pokemon-filtered">
-             <li v-for="pok2 of pokemonFilter" :key="pok2.name">
-            <span v-on:click="getFullPoke"> {{ pok2.name }} </span>
-          </li>
-        </div>
-      </div>
-      <!-- <router-link class="pokemonhgj" tag= "div" :to="`/pokemon/${this.textSearch}`"> -->
-            <!-- v-for="pok2 in textSearch"
-            :key="pok2.name"/> -->
-    <pokemon-detail
-      :pokemons="pokemons"
-    />
-  <!-- </router-link> -->
+  <section class="search">
+    <div class="search__navbar">
+      <input type="text"
+      v-model="searchP"
+      placeholder="Looking for pokemons..."
+      v-on:keyup.enter="pokemonSelect">
+      <p> Pokedex is searching...: {{searchP}} </p>
     </div>
+    <div class="search__lista-todos">
+      <ul
+        @click="pokemonSelect(detail.name)">
+        <li v-for="pok2 of filteredPokemon"
+        v-bind:name="pok2.name"
+        v-show="searchP"
+        :key="pok2.name">
+        <span> {{pok2.name}} </span>
+        </li>
+      </ul>
+    </div>
+      <pokemon-detail
+      :name = "name"
+      v-show="searchP"/>
   </section>
-</template>
 
+</template>
 <script>
 import axios from 'axios'
 import PokemonDetail from '@/components/Hero/PokemonDetail'
 
 export default {
   name: 'Search',
-
   components: {
     PokemonDetail
   },
   data () {
     return {
-      pokemons: [],
-      textSearch: ''
+      pokemon: null,
+      name: '',
+      detail: '',
+      searchP: '',
+      pokemons: []
+
     }
   },
   mounted () {
-    this.getFullPoke()
+    this.pokemonComplete()
   },
   methods: {
-    async getFullPoke () {
+    async pokemonComplete () {
       try {
-        let resul = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
-        this.pokemons = resul.data.results
+        let res = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=386')
+        this.pokemons = res.data.results
+        this.name = res.data.results.name
       } catch (e) {
-        throw new Error('Prueba con otro Pokemo getFull')
+        throw new Error('Buscando el pokemon...')
       }
     },
-    async getOnePoke (textSearch) {
+    async pokemonSelect () {
       try {
-        let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.textSearch}`)
-        console.log(res)
-        this.textSearch = res.data
+        this.name = this.searchP
       } catch (e) {
-        throw new Error('Search again')
+        throw new Error('Buscando el pokemon...')
       }
-    },
-    showDetail: function (a) {
-      console.log(this.textSearch)
     }
   },
   computed: {
-    pokemonFilter () {
-      // buscado en internet: por qué ocurre esto: con el this.textSearch no funciona
-      var textSearch = this.textSearch
-      return this.pokemons.filter(function (item) {
-        return item.name.indexOf(textSearch) !== -1
+    filteredPokemon (searching) {
+      return this.pokemons.filter(poke => {
+        return poke.name.includes(this.searchP)
       })
     }
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-.prueba {
-  &__pokemon-filtered {
-    max-height: 150px;
+.search {
+  position: relative;
+  padding-bottom: 50px;
+  &__lista-todos {
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.15);
+    max-height: 200px;
     overflow-y: scroll;
-    list-style: none;
-    text-transform: capitalize;
+    li {
+      list-style: none;
+    }
   }
 }
 </style>

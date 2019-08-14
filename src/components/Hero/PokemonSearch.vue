@@ -1,50 +1,47 @@
 <template>
-    <ul>
-      <li
-        class="pokemon_filter"
-        v-for="pok of pokemonFilter"
-        :key="pok.name">
-          <span v-on:click="getFullPoke">
-            {{ pok.name }}
-          </span>
-       </li>
-    </ul>
+    <div class="searchBar">
+      <form @submit.prevent="setPokemonUrl">
+        <input type="text" v-model="searchValue">
+      </form>
+      <i class="fas fa-search" @click="setPokemonUrl"></i>
+
+      </div>
 </template>
 
 <script>
-// export default {
-//   name: 'PokemonSearch',
+export default {
+  name: 'PokemonSearch',
 
-//   props: {
-//     pokemons: {
-//       type: Array,
-//       default: ''
-//     },
-//     name: {
-//       type: String
-//     }
-//   }
-// computed: {
-//   pokemonFilter () {
-//   // buscado en internet: por qué ocurre esto: con el this.textSearch no funciona
-//     return this.pokemons.filter(function (poke) {
-//       return poke.name.include(this.name)
-//     })
-//   }
-// },
-// created: {
-//   async getFullPoke () {
-//     try {
-//       let resul = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
-//       this.pokemons = resul.data.results
-//     } catch (e) {
-//       throw new Error('Prueba con otro Pokemo getFull')
-//     }
-//   }
-// }
-
+  props: [
+    'apiUrl'
+  ],
+  data: () => {
+    return {
+      searchValue: ''
+    }
+  },
+  methods: {
+    setPokemonUrl (url) {
+      if (this.searchValue !== '') { this.$emit('setPokemonUrl', this.apiUrl, this.searchValue) }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+  .searchBar {
+    position: relative;
+    width: 100%;
+    max-width: 510px;
+    padding-bottom: 20px;
+
+    input {
+      border: forestgreen;
+      outline: black;
+      }
+    i {
+      color: greenyellow;
+    }
+  }
 
 </style>

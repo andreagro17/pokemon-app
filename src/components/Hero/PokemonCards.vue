@@ -1,5 +1,7 @@
 <template>
   <router-link class="pokemon-cards" tag= "article" :to="`/pokemon/${name}`">
+    <div id='root' v-cloak>
+  </div>
     <h3 class="pokemon-cards__name">
       <br>
         <!-- name que aparece es el name de las props -->
@@ -51,14 +53,51 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
     &__name {
-      font-size: 15px;
+      font-size: 20px;
     }
     &__image {
-      margin-bottom: 16px;
-      border-radius: 100%;
-      border: 1px dotted;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: rgb(190, 174, 174);
     }
+    &__image:hover {
+      transform: scale(1.2);
+      box-shadow: 2px 2px 10px #666;
+    }
+}
+[v-cloak] > * { display: none; }
+[v-cloak]::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 </style>

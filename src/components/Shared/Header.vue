@@ -2,9 +2,11 @@
   <header class="pokemon-header">
     <div class="pokemon-header__logo">
       <a href='#/' class="router-link-active">
-        <img src="@/assets/pokemon-svgrepo-com.svg" alt="PokeBall" href="#/" class="router-link-active">
+        <router-link to="/" active-class="active">
+          <img src="@/assets/pokemon-svgrepo-com.svg" alt="PokeBall" class="router-link-active">
           Hazte con todos! | Pokemon
-        </a>
+        </router-link>
+      </a>
     </div>
   <nav class="pokemon-header__nav">
     <ul class="nav__ul">
@@ -35,7 +37,12 @@ export default {
       margin-right: 8px;
       vertical-align: middle;
       width: 80px;
+      border-radius: 50%;
+      transition: transform .8s ease-in-out;
     }
+    img:hover{
+    transform: rotate(360deg);
+}
   }
   &__nav {
     align-content: center;
@@ -51,11 +58,13 @@ export default {
   li{
     padding: 8px;
     text-decoration: none;
+    cursor: pointer;
+  }
   }
   a {
     text-decoration: none;
-    // font-display: swap;
+    cursor: default;
   }
-  }
- }
+}
+
 </style>

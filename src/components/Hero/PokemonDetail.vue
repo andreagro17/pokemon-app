@@ -1,5 +1,6 @@
 <template>
   <section class="pokemon__all">
+    <i class="fas fa-cog fa-spin"></i>
     <h1 class="pokemon__title">
       #{{ detail.id }}  {{ detail.name }}</h1>
         <section class="pokemon__sprites">
@@ -133,8 +134,19 @@ export default {
     } catch (e) {
       throw new Error('Prueba con otro Pokemon')
     }
+  },
+  watch: {
+    name: function (newVal, oldVal) { // watch it
+      let namePokemon = newVal
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
+        .then((resu) => {
+          console.log(resu)
+          this.detail = resu.data
+        })
+    }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -178,4 +190,5 @@ export default {
     overflow-y: scroll;
   }
 }
+
 </style>
