@@ -35,7 +35,6 @@ export default {
   },
   data () {
     return {
-      pokemon: null,
       name: '',
       detail: '',
       searchP: '',
