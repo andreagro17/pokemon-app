@@ -1,6 +1,5 @@
 <template>
   <section class="pokemon__all">
-    <i class="fas fa-cog fa-spin"></i>
     <h1 class="pokemon__title">
       #{{ detail.id }}  {{ detail.name }}</h1>
         <section class="pokemon__sprites">
@@ -126,23 +125,28 @@ export default {
     }
   },
   async created () {
-    try {
-      let namePokemon = this.$route.params.name
-      let resu = await axios.get(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
-      console.log(resu)
-      this.detail = resu.data
-    } catch (e) {
-      throw new Error('Prueba con otro Pokemon')
+    let namePokemon = this.$route.params.name
+    if (namePokemon !== undefined) {
+      try {
+        let resu = await axios.get(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
+        console.log(resu)
+        this.detail = resu.data
+      } catch (e) {
+        throw new Error('Prueba con otro Pokemon')
+      }
     }
   },
   watch: {
     name: function (newVal, oldVal) { // watch it
-      let namePokemon = newVal
-      axios.get(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
-        .then((resu) => {
-          console.log(resu)
-          this.detail = resu.data
-        })
+      console.log(newVal, oldVal)
+      if (newVal !== undefined) {
+        let namePokemon = newVal
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
+          .then((resu) => {
+            console.log(resu)
+            this.detail = resu.data
+          })
+      }
     }
   }
 }

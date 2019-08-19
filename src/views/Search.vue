@@ -5,12 +5,14 @@
       v-model="searchP"
       placeholder="Looking for pokemons..."
       v-on:keyup.enter="pokemonSelect">
+      <i class="fa fa-search" @click="pokemonSelect">
+      </i>
       <p> Pokedex is searching...: {{searchP}} </p>
     </div>
     <div class="search__lista-todos">
-      <ul
-        @click="pokemonSelect(detail.name)">
+      <ul>
         <li v-for="pok2 of filteredPokemon"
+        @click="pokemonComplete(pok2.name)"
         v-bind:name="pok2.name"
         v-show="searchP"
         :key="pok2.name">
@@ -42,21 +44,21 @@ export default {
 
     }
   },
-  mounted () {
-    this.pokemonComplete()
+  async mounted () {
+    let res = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=386')
+    this.pokemons = res.data.results
   },
   methods: {
-    async pokemonComplete () {
+    async pokemonComplete (name) {
       try {
-        let res = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=386')
-        this.pokemons = res.data.results
-        this.name = res.data.results.name
+        this.name = name
       } catch (e) {
         throw new Error('Buscando el pokemon...')
       }
     },
     async pokemonSelect () {
       try {
+        console.log(1, this.filteredPokemon.length)
         this.name = this.searchP
       } catch (e) {
         throw new Error('Buscando el pokemon...')
@@ -89,4 +91,9 @@ export default {
     }
   }
 }
+i {
+  color: #0A2E50;
+  cursor: pointer;
+}
+
 </style>

@@ -9,6 +9,7 @@
         </ul>
       <div class=""></div>
    <button class="btn btn-primary" v-if="api.previous" @click="previous">Previous</button>
+   <span> {{ pageCount }} {{numberOfPages}} </span>
    <button class="btn btn-primary" v-if="api.next" @click="next">Next</button>
   </section>
 </template>
@@ -27,7 +28,10 @@ export default {
 
   data () {
     return {
-      api: {}
+      api: {},
+      pageCount: 1,
+      perPage: 20,
+      numberOfPages: ''
     }
   },
   created () {
@@ -37,12 +41,17 @@ export default {
     fetchPokemons (url = 'https://pokeapi.co/api/v2/pokemon') {
       axios.get(url)
         .then(res => { this.api = res.data })
+      console.log(1, this.api.length)
     },
     next () {
       this.fetchPokemons(this.api.next)
+      this.pageCount = this.pageCount + 1
     },
     previous () {
       this.fetchPokemons(this.api.previous)
+      this.pageCount = this.pageCount - 1
+    },
+    numberPage () {
     }
   }
 }

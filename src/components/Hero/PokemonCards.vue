@@ -1,7 +1,9 @@
 <template>
   <router-link class="pokemon-cards" tag= "article" :to="`/pokemon/${name}`">
-    <div id='root' v-cloak>
-  </div>
+    <div v-if='loading' class="loading">
+      <i class="fas fa-spinner fa-pulse"></i>
+    </div>
+    <section v-else>
     <h3 class="pokemon-cards__name">
       <br>
         <!-- name que aparece es el name de las props -->
@@ -10,6 +12,7 @@
         <div class="pokemon-cards__image">
       <img :src="pokemonImg" alt="image" class="img-thumbnail"/>
     </div>
+    </section>
   </router-link>
 </template>
 
@@ -29,7 +32,8 @@ export default {
   data () {
     return {
       pokemonImg: null,
-      pokemonId: ''
+      pokemonId: '',
+      loading: false
     }
   },
   computed: {
@@ -38,9 +42,11 @@ export default {
     }
   },
   async created () {
+    this.loading = true
     let res = await axios.get(this.url)
     this.pokemonImg = res.data.sprites.front_default
     this.pokemonId = res.data.id
+    this.loading = false
     console.log(res)
   }
 }
@@ -72,32 +78,21 @@ export default {
       box-shadow: 2px 2px 10px #666;
     }
 }
-[v-cloak] > * { display: none; }
-[v-cloak]::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+.loading {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin:50px auto;
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.loading:before {
+  content: "\f110";
+  font-family: FontAwesome;
+  font-size:20px;
+  position: absolute;
+  top: 0;
 }
 
 </style>
